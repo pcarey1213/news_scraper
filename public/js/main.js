@@ -1,10 +1,10 @@
-$.getJSON("/api/articles", function(data) {
-  // For each one
-  for (var i = 0; i < data.length; i++) {
-    // Display the apropos information on the page
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
-  }
-});
+// $.getJSON("/api/articles", function(data) {
+//   // For each one
+//   for (var i = 0; i < data.length; i++) {
+//     // Display the apropos information on the page
+//     $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "</p>");
+//   }
+// });
 
 // When the #scrape button is pressed
 $("#scrape").on("click", function() {
@@ -12,7 +12,7 @@ $("#scrape").on("click", function() {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "api/scrape",
+    url: "/api/scrape",
     // On a successful call, clear the #results section
     success: function(response) {
       console.log(response);

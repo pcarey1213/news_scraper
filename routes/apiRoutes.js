@@ -5,25 +5,21 @@ var db = require("../models");
 
 module.exports = function(app) {
   // A GET route for scraping the echoJS website
-app.get("api/scrape", function(req, res) {
+app.get("/api/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("http://www.espn.com/").then(function(response) {
+  axios.get("http://www.newyorker.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("li").each(function(i, element) {
+    $("p.Card__dek___29Iu1").each(function(i, element) {
       // Save an empty result object
-      var result = {};
-
+      var result = {
+      };
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(this)
-        .children("a")
-        .text();
-      result.link = $(this)
-        .children("a")
-        .attr("href");
-
+      result.title = $(this).prev().children("h3").text();
+      result.summary = $(this).text();
+      result.link = "http://www.newyorker.com" + $(this).prev().attr("href");
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function(dbArticle) {
