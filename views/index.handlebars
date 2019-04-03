@@ -7,45 +7,62 @@
 
          <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav mr-auto">
-               <li class="nav-item active">
-               <a class="nav-link" href="/">Home
-                  <span class="sr-only">(current)</span>
-               </a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="/saved">Saved Articles</a>
+                  <a class="btn btn-danger text-white scrape-new m-1" id="scrape">Scrape New Articles!</a>
                </li>
                <li class="nav-item">
-                  <a class="btn btn-danger scrape-new m-1" id="scrape">Scrape New Articles!</a>
-               </li>
-               <li class="nav-item">
-                  <a class="btn btn-danger clear m-1">Clear Articles!</a>
+                  <a class="btn btn-danger text-white clear m-1">Clear Articles!</a>
                </li>
             </ul>
          </div>
       </nav>
-   <div class="jumbotron text-center">
-         <div class="overlay">
-         </div>
-         <div class="background-image">
-         </div>
-      <div class="caption">
-         <h1>Mongo Scraper</h1>
-         <p>New Yorker Edition</p>
+   <div class="jumbotron m-2 text-center">
+       <img src="/images/newyorker.jpg" class="img-fluid"></img>
       </div>
    </div>
-      <div class="container-fluid article-container" id="articles">
-         	{{#each articles}}
-            <div class="card m-1">
-            <div class="card-header">
-               <h3>
-                  <a class="article-link" target="_blank" rel="noopener noreferrer" href={{link}}>{{title}}</a>
-                  <a class="btn btn-success save">Save Article</a>
-               </h3>
-            </div>
-            <div class="card-body">{{summary}}</div>
+   <div class="row">
+      <div class="col-6 article-container m-1" id="articles">
+            {{#each articles}}
+            <div class="card m-2">
+               <div class="card-header">
+                  <h5>
+                     <a class="article-link" target="_blank" rel="noopener noreferrer" href={{link}}>{{title}}</a>
+                  </h5>
+               </div>
+               <div class="card-body">
+                  <div class="card-text">{{summary}}</div>
+                  <a class="btn btn-primary mt-1" id="commentButton" data-id={{_id}}>Comments</a>
+               </div>
             </div>
             {{/each}}
       </div>
-      <div id="comments"></div>
-    </div>
+
+      <div class="col-6 comment-container m-1" id="comments"></div>
+         {{#each comments}}
+            <div class="card m-2">
+               <div class="card-header">
+                  <h5>
+                     <a class="article-link" target="_blank" rel="noopener noreferrer" href={{link}}>{{title}}</a>
+                  </h5>
+               </div>
+               <div class="card-body">
+                  <input id='titleinput' name='title' > 
+                  </input>
+                  <textarea id='bodyinput' name='body'>
+                  </textarea>
+                  <button data-id={{_id}} id='savenote'>Save Note</button>
+                  {{!-- {{#if comment}}
+                     {{#each comment}}
+                        <h5 class="card-text">{{comment.title}}</h5>
+                        <div class="card-text">{{comment.body}}</div>
+                     {{/each}}
+                  {{else}}
+                     <div class="card-text">{{summary}}</div> 
+                  {{/if}} --}}
+               </div>
+            </div>
+         {{/each}}
+      </div>
+
+   </div>

@@ -23,9 +23,10 @@ app.get("/articles/:id", function(req, res) {
   db.Article.findOne({ _id: req.params.id })
     // ..and populate all of the comments associated with it
     .populate("comment")
-    .then(function(dbArticle) {
+    .then(function(dbComments) {
       // If we were able to successfully find an Article with the given id, send it back to the client
-      res.json(dbArticle);
+      console.log(dbComments)
+      res.render("index", {comments:dbComments});
     })
     .catch(function(err) {
       // If an error occurred, send it to the client
