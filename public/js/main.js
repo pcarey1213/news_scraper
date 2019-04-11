@@ -7,20 +7,34 @@
 // });
 
 // When the #scrape button is pressed
-$("#scrape").on("click", function() {
+$(document).on("click", "#scrape", function() {
   // Make an AJAX GET request to scrape into the db
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: "/api/scrape",
-
-    success: function(response) {
-      console.log(response);
-    }
+    url: "/api/scrape"
+  .then(function(data) {
+      console.log(data);
+      console.log("Accessing articles");
+      location.reload()
+  })
   });
 });
 
-
+// When the #clear-all button is pressed
+$("#clear-all").on("click", function() {
+  // Make an AJAX GET request to delete the notes from the db
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "/api/clearall",
+    // On a successful call, clear the #results section
+    success: function(response) {
+      $("#articles").empty();
+      $("#comments").empty();
+    }
+  });
+});
 
 // Whenever someone clicks comment tag
 $(document).on("click", "#commentButton", function() {
@@ -29,15 +43,16 @@ $(document).on("click", "#commentButton", function() {
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
 
-  // Now make an ajax call for the Article
+  // Now make an ajax call for the Comments
   $.ajax({
     method: "GET",
-    url: "/articles/" + thisId,
-    success: function(response) {
-      console.log(response);
+    dataType: "json",
+    url: "/articles/" + thisId
+    .then(function(data) {
+      console.log(data);
       console.log("Accessing comments");
-      location.reload();
-      }
+      location.reload()
+      })
     });
 });
 
